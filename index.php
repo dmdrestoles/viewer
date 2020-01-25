@@ -1,24 +1,29 @@
 <!--
-	Things to do:
-		• On click of table cell, display modal
-		• Proper modal display 
-		• Retrieve data based on textbox (see /references/qpi-calc-master/assets/js/app.js addSemClases() function)
-		• Parse data so that it will display correspondingly 
+	To-do:
+		• Parsing AISIS schedule data
+		• Adding of parsed AISIS schedule data to .class-list div
+		• Coloring of table on check mark of class-list data
 -->
 
 <html>
+	<?php
+		require 'php/essentials.php';
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
 
-<?php
-
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
-	error_reporting(E_ALL);
-
-	$startDate = "2019-12-26 7:00:00";
-	$endDate = "2019-12-26 22:00:00";
-	$startTime = date("H:i", strtotime($startDate));
-	$endTime = date("H:i", strtotime($endDate));
-?>
+		$startDate = "2019-12-26 7:00:00";
+		$endDate = "2019-12-26 22:00:00";
+		$startTime = date("H:i", strtotime($startDate));
+		$endTime = date("H:i", strtotime($endDate));
+		/*
+		$sample = processClasses(fread(fopen("samplefiles/sample.txt", "r"), filesize("samplefiles/sample.txt")));
+		foreach ($sample as &$x){
+			echo $x;
+			echo "<br/>";
+		}
+		*/
+	?>
 	<head>
 		<title>Class Schedule Viewer</title>
 
@@ -30,6 +35,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans:600italic,700,600,400' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/mainpage.css" />
+		<script src="js/main.js"></script>
 	</head>
 
 	<header>
@@ -37,19 +43,19 @@
 	</header>
 
 	<div class="page-container">
-		<div class="calendar col-lg-9">
+		<div class="calendar col-lg-6">
 			<table width="100%" border="3" cellspacing="5" align="center">
 				<tr>
 					<td align="center">
-					<td>MONDAY
-					<td>TUESDAY
-					<td>WEDNESDAY
-					<td>THURSDAY
-					<td>FRIDAY
-					<td>SATURDAY
+					<td>MONDAY</td>
+					<td>TUESDAY</td>
+					<td>WEDNESDAY</td>
+					<td>THURSDAY</td>
+					<td>FRIDAY</td>
+					<td>SATURDAY</td>
 				</tr>
-				<?php 
-					$x = 1; 
+				<?php
+					$x = 1;
 					$startSched = $startTime;
 					while ($x <= 30):
 						$class = "time" . $x;
@@ -58,14 +64,14 @@
 				?>
 				<tr class="<?php echo $class; ?>">
 					<td> <?php echo $startSched . "-" . $endSched; ?>
-					<td class="monday"><a data-toggle="modal" data-target="#schedModal" href="#schedModal" data-id="<?= $x . "-monday";?>" data-category="<?=$x;?>">View</a></td>
-					<td class="tuesday"><a data-toggle="modal" data-target="#schedModal" href="#schedModal" data-id="<?= $x . "-tuesday";?>" data-category="<?=$x;?>">View</a></td>
-					<td class="wednesday"><a data-toggle="modal" data-target="#schedModal" href="#schedModal" data-id="<?= $x . "-wednesday";?>" data-category="<?=$x;?>">View</a></td>
-					<td class="thursday"><a data-toggle="modal" data-target="#schedModal" href="#schedModal" data-id="<?= $x . "-thursday";?>" data-category="<?=$x;?>">View</a></td>
-					<td class="friday"><a data-toggle="modal" data-target="#schedModal" href="#schedModal" data-id="<?= $x . "-friday";?>" data-category="<?=$x;?>">View</a></td>
-					<td class="saturday"><a data-toggle="modal" data-target="#schedModal" href="#schedModal" data-id="<?= $x . "-saturday";?>" data-category="<?=$x;?>">View</a></td>
+					<td id="monday-<? $x ?>"></td>
+					<td id="tuesday-<? $x ?>"></td>
+					<td id="wednesday-<? $x ?>"></td>
+					<td id="thursday-<? $x ?>"></td>
+					<td id="friday-<? $x ?>"></td>
+					<td id="saturday-<? $x ?>"></td>
 				</tr>
-				<?php 
+				<?php
 					$startSched = $endSched;
 					$x++;
 					endwhile;
@@ -73,68 +79,23 @@
 			</table>
 		</div>
 		<div class="navigation col-lg-3">
+			<textarea id="schedule" autofocus="true" cols="105" placeholder="Paste AISIS schedule here" rows="10"></textarea>
 			<div class="button-list">
 				<button class="fill-btn btn-primary btn-lg" id="step4" type="button" data-toggle="modal" data-target="#myModal">Fill</button>
 				<br/>
 				<br/>
-				<button class="reset-btn btn-warning btn-lg">Reset</button>
+				<button class="reset-btn btn-warning btn-lg" id="step5">Reset</button>
 			</div>
 
 			<div class="infosheet">
 				<h3>This is where hovered timeslot info will appear!</h3>
-			</div>
-		</div>
+				<div class="info-proper">
 
-		<!-- Modal for Fill-->
-		<div class="modal fade" id="myModal" role="dialog">
-			<div class="modal-dialog">
-
-			  <!-- Modal content-->
-			  <div class="modal-content">
-				<div class="modal-header">
-				  <button type="button" class="close" data-dismiss="modal">&times;</button>
-				  <h4 class="modal-title">Auto Fill Up</h4>
-					<p>Go to your AISIS account and head to CLASS SCHEDULE. Select your desired schedule to view and copy the entire table.</p>
-				  <a  class ="modal-title go-to-aisis" href="http://aisis.ateneo.edu" target="_blank">Go to AISIS <i class="fas fa-sign-in-alt"></i></a>
-				  <h5 class="modal-error">*Invalid input</h5>
 				</div>
-				<div class="modal-body">
-					<textarea class="txt-area"></textarea>
-				</div>
-				<div class="modal-footer">
-				<!-- button on close and to fill up -->
-				  <button type="button" class="modal-fill-btn" data-dismiss="modal">Fill Up</button>
-				  <button type="button" class="modal-cl-btn" data-dismiss="modal">Cancel</button>
-				</div>
-			  </div>
-			</div>
-		</div>
-
-		<div class="modal fade" id="schedModal" role="dialog">
-			<div class="modal-dialog">
-				<div class="modal-header">
-				  <button type="button" class="close" data-dismiss="modal">&times;</button>
-				  <h4 class="modal-title">Class Schedule on</h4>
-				 </div>
-
-				 <div class="modal-body">
-				 	<h3>List of classes of</h3>
-				 </div>
-
-				 <div class="modal-footer">
-
-				 </div>
 			</div>
 		</div>
 	</div>
-
 	<script type="text/javascript">
-		$('#schedModal').on('show.bs.modal', function (event) {
-		    var clickedLink = $(event.relatedTarget); // clickedLink that triggered the modal
-		    var id = clickedLink.data('id'); // Extract info from data-id attributes
-		    var category = clickedLink.data('category'); // Extract info from data-category attributes
-		    var modal = $(this);
-		    modal.find('.modal-body').load('remote.php',{var1:id,var2:category});
-		});
+
 	</script>
 </html>
