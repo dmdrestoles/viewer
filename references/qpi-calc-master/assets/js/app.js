@@ -19,7 +19,7 @@ $(document).ready(function() {
 		rowTotal = $(".input-row").length;
 		$(".input-table > tbody > tr").eq(rowTotal-aisisRowTotal).after("<tr class='input-row'>" + $(".input-row").html() + "</tr>");
 	});
-	
+
 	$(".modal-fill-btn").on("click", function() {
 		summSplit = $(".txt-area").val().split(/\s\t|\t|\n/);
 		if(!addSemClasses()) {
@@ -45,7 +45,7 @@ $(document).ready(function() {
 			updateQPI();
 		}
 	});
-	
+
 	$(".res-btn").on("click", function() {
 		$(".input-row:eq(0) .course-code").val("");
 		$(".input-row:eq(0) .unit-select").val(3);
@@ -61,11 +61,11 @@ $(document).ready(function() {
 	});
 
 	$(".input-card").on("change", ".input-select", updateQPI);
-	
+
 	$('.target-end').on('input',function(){
     	updateQPI();
 	});
-	
+
 	/*$('.target-end').on('blur',function(){
 		if($('.target-end').val() > 4)
 			$('.target-end').val("4.00")
@@ -74,11 +74,11 @@ $(document).ready(function() {
 		else if($('.target-end').val() == "")
 			$('.target-end').val("1.25")
 	});*/
-	
+
 	$('.sem-units').on('input',function(){
     	updateQPI();
 	});
-	
+
 	$('.sem-units').on('blur',function(){
 		if($('.sem-units').val() < 0)
 			$('.sem-units').val("0")
@@ -99,20 +99,20 @@ $(document).ready(function() {
 		currEnrolled = [];
 		currCourseCode = "";
 		ifUncredited = false;
-		
-		if(isNaN(summSplit[0].substring(0, 4)) || isNaN(summSplit[1])) 
+
+		if(isNaN(summSplit[0].substring(0, 4)) || isNaN(summSplit[1]))
 			return false;
 		else {
 			for (i=0; i<summSplit.length; i++) {
-				if (i%7==3) { 
+				if (i%7==3) {
 					currCourseCode = summSplit[i];
-					countedGrade = (summSplit[i+3] =="A") || (summSplit[i+3]=="B+") || (summSplit[i+3]=="B") 
-					|| summSplit[i+3]== "C+" || summSplit[i+3]== "C" || summSplit[i+3] == "D" || 
+					countedGrade = (summSplit[i+3] =="A") || (summSplit[i+3]=="B+") || (summSplit[i+3]=="B")
+					|| summSplit[i+3]== "C+" || summSplit[i+3]== "C" || summSplit[i+3] == "D" ||
 					summSplit[i+3] == "F" || summSplit[i+3] == "W" || summSplit[i+3].startsWith("CURRENTLY");
-					
-					ifUncredited = currCourseCode.startsWith("PE") || currCourseCode.startsWith("NSTP") 
+
+					ifUncredited = currCourseCode.startsWith("PE") || currCourseCode.startsWith("NSTP")
 					|| summSplit[i+2].startsWith("0") || !countedGrade;
-				
+
 					if(ifUncredited)
 						continue;
 					else
@@ -120,11 +120,11 @@ $(document).ready(function() {
 				}
 				if (i%7==5 && !ifUncredited) {
 					course_units.push(summSplit[i]);
-					if (summSplit[i+1].startsWith("CURRENTLY")) 
+					if (summSplit[i+1].startsWith("CURRENTLY"))
 						currEnrolled.push(true);
 					else
 						currEnrolled.push(false);
-						
+
 					if(isNaN(summSplit[i]))
 						return false;
 				}
@@ -140,10 +140,10 @@ $(document).ready(function() {
 					else grade_index.push(0);
 				}
 			}
-		
+
 			rowTotal = $(".input-row").length;
 			initialRowTotal = rowTotal;
-		
+
 			for (i=0; i<course_codes.length; i++) {
 				currRow = rowTotal + i;
 				if(grade_index[i] != 0) {
@@ -160,7 +160,7 @@ $(document).ready(function() {
 					$(".input-row:eq(" + currRow + ") .course-code").val(course_codes[i]);
 					$(".input-row:eq(" + currRow + ") .unit-select").val(course_units[i]);
 					$(".input-row:eq(" + currRow + ") .grade-select option:eq(" + grade_index[i] + ")").prop('selected', true);
-				
+
 				}
 			}
 			return true;
@@ -179,7 +179,7 @@ $(document).ready(function() {
 
 		for(i = 0; i < rowTotal; i++) {
 			gradeSelectVal = $(".input-row:eq(" + i + ") .grade-select").val();
-			
+
 			if (gradeSelectVal != "-") {
 				grade = parseFloat(gradeSelectVal);
 				units = parseFloat($(".input-row:eq(" + i + ") .unit-select").val());
@@ -187,10 +187,10 @@ $(document).ready(function() {
 				unitTotal += units;
 			}
 		}
-		
+
 		for(i = 0; i < aisisRowTotal; i++) {
 			gradeSelectVal = $(".input-row.aisis-rows:eq(" + i + ") .grade-select").val();
-			
+
 			if (gradeSelectVal != "-") {
 				grade = parseFloat(gradeSelectVal);
 				units = parseFloat($(".input-row.aisis-rows:eq(" + i + ") .unit-select").val());
@@ -205,7 +205,7 @@ $(document).ready(function() {
 			qpi = toFixed(gradeTotal/unitTotal, 2);
 			animateQPI(Math.abs(qpi - parseFloat($(".qpi-display").text()))/20);
 		}
-		
+
 		if (isNaN(targetQpi)) {
 			targetQpi = toFixed(Number((target*(unitTotal+Number(semUnits))-gradeTotal)/Number(semUnits)), 2);
 			setTargetQPI(targetQpi);
@@ -214,7 +214,7 @@ $(document).ready(function() {
 			animateTargetQPI(Math.abs(targetQpi - parseFloat($(".target-qpi").text()))/20);
 		}
 	}
-	
+
 	function toFixed(num, precision) {
     	return (+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(precision);
 	}
@@ -236,12 +236,12 @@ $(document).ready(function() {
 					addend = -step;
 
 				setQPI((gradeDisplay + addend).toFixed(2));
-			
+
 				animateQPI(step);
 			}
 		}, 20);
 	}
-	
+
 	var animateTargetQPI = function(step) {
 		if(isNaN(targetQpi) || targetQpi > 4 || targetQpi < 0) {
 			setTargetQPI("lolnope");
@@ -257,14 +257,14 @@ $(document).ready(function() {
 				if (step < 0.01)
 					step = 0.01;
 				//console.log("above: " + step);
-				
+
 				if ($(".target-qpi").text() < targetQpi)
 					addend = step;
 				else
 					addend = -step;
 				//console.log("below: " + (Number(gradeDisplay) + Number(addend)));
 				setTargetQPI((Number(gradeDisplay) + Number(addend)).toFixed(2));
-			
+
 				animateTargetQPI(step);
 			}
 		}, 20);
@@ -276,7 +276,7 @@ $(document).ready(function() {
 		else
 			$(".qpi-display").text("-");
 	}
-	
+
 	function setTargetQPI(qpi) {
 		if (isNaN(qpi) || qpi > 4 || qpi < 0) {
 			$(".target-qpi").text("IMPOSSIBLE");
