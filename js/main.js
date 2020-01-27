@@ -1,11 +1,16 @@
 $(document).ready(function() {
     $('#step4').on("click", function(){
-        schedSplit = $("#schedule").val().split("\n");
-        schedLength = schedSplit.length;
+        textAreaContent = $("#schedule").val().split("\n");
+        textAreaSize = textAreaContent.length;
 
-        if (schedLength > 0){
-            for (i = 0; i < schedLength; i++){
-                $(".info-proper").append("<p>Processed</p>");
+        if (textAreaSize > 0){
+            for (i = 0; i < textAreaSize; i++){
+                var parsedScheduleInfo = parseSched(textAreaContent[i]);
+                var scheduleClass = parsedScheduleInfo.subjectCode + " " +  parsedScheduleInfo.section;
+                var scheduleTime = parsedScheduleInfo.time;
+                var parsedScheduleEntry = "<input type=\"checkbox\" value=\"i\">" + scheduleClass + " - " + scheduleTime + "<br>";
+
+                $(".info-proper").append(parsedScheduleEntry);
             }
         }
     });
@@ -15,3 +20,23 @@ $(document).ready(function() {
         $(".info-proper").empty();
     });
 });
+
+function parseSched(scheduleEntry){
+    var scheduleDataArray = scheduleEntry.split("\t");
+    var scheduleInfoDict = {
+        subjectCode : scheduleDataArray[0],
+        section : scheduleDataArray[1],
+        courseTitle : scheduleDataArray[2],
+        units : scheduleDataArray[3],
+        time : scheduleDataArray[4],
+        room : scheduleDataArray[5],
+        instructor : scheduleDataArray[6],
+        maxClassSize : scheduleDataArray[7],
+        language : scheduleDataArray[8],
+        level : scheduleDataArray[9],
+        freeSlots : scheduleDataArray[10],
+        remarks : scheduleDataArray[11],
+    };
+
+    return scheduleInfoDict;
+}
