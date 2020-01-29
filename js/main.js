@@ -16,7 +16,7 @@ $(document).ready(function() {
     });
 
     $('#step5').on("click", function(){
-        $("#schedule").val("");
+        $("#schedule").val(""); 
         $(".info-proper").empty();
     });
 
