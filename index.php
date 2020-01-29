@@ -1,6 +1,5 @@
 <!--
 	To-do:
-		• Parsing AISIS schedule data
 		• Adding of parsed AISIS schedule data to .class-list div
 		• Coloring of table on check mark of class-list data
 -->
@@ -14,8 +13,8 @@
 
 		$startDate = "2019-12-26 7:00:00";
 		$endDate = "2019-12-26 22:00:00";
-		$startTime = date("H:i", strtotime($startDate));
-		$endTime = date("H:i", strtotime($endDate));
+		$startTime = date("Hi", strtotime($startDate));
+		$endTime = date("Hi", strtotime($endDate));
 		/*
 		$sample = processClasses(fread(fopen("samplefiles/sample.txt", "r"), filesize("samplefiles/sample.txt")));
 		foreach ($sample as &$x){
@@ -60,20 +59,20 @@
 					while ($x <= 30):
 						$class = "time" . $x;
 
-						$endSched = date("H:i", strtotime($startSched) + 1800);
+						$endSched = date("Hi", strtotime($startSched) + 1800);
 				?>
-				<tr class="<?php echo $class; ?>">
-					<td> <?php echo $startSched . "-" . $endSched; ?>
-					<td id="monday-<? $x ?>"></td>
-					<td id="tuesday-<? $x ?>"></td>
-					<td id="wednesday-<? $x ?>"></td>
-					<td id="thursday-<? $x ?>"></td>
-					<td id="friday-<? $x ?>"></td>
-					<td id="saturday-<? $x ?>"></td>
+				<tr class="<?php echo $class; ?>" value="<?php echo $startSched; ?>">
+					<td><?php echo $startSched . "-" . $endSched; ?></td>
+					<td id="<?php echo "mon-" . $startSched; ?>"></td>
+					<td id="<?php echo "tue-" . $startSched; ?>"></td>
+					<td id="<?php echo "wed-" . $startSched; ?>"></td>
+					<td id="<?php echo "thu-" . $startSched; ?>"></td>
+					<td id="<?php echo "fri-" . $startSched; ?>"></td>
+					<td id="<?php echo "sat-" . $startSched; ?>"></td>
 				</tr>
 				<?php
 					$startSched = $endSched;
-					$x++;
+					$x = $x + 1;
 					endwhile;
 				?>
 			</table>

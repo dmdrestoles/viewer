@@ -3,12 +3,12 @@ $(document).ready(function() {
         textAreaContent = $("#schedule").val().split("\n");
         textAreaSize = textAreaContent.length;
 
-        if (textAreaSize > 0){
+        if (textAreaContent != ''){
             for (i = 0; i < textAreaSize; i++){
                 var parsedScheduleInfo = parseSched(textAreaContent[i]);
                 var scheduleClass = parsedScheduleInfo.subjectCode + " " +  parsedScheduleInfo.section;
                 var scheduleTime = parsedScheduleInfo.time;
-                var parsedScheduleEntry = "<input type=\"checkbox\" value=\"i\">" + scheduleClass + " - " + scheduleTime + "<br>";
+                var parsedScheduleEntry = "<input type=\"checkbox\" value=" + scheduleTime + "> " + scheduleClass + " - " + scheduleTime.replace("_", " ") + "<br>";
 
                 $(".info-proper").append(parsedScheduleEntry);
             }
@@ -19,6 +19,14 @@ $(document).ready(function() {
         $("#schedule").val("");
         $(".info-proper").empty();
     });
+
+     $('input[type="checkbox"]').click(function(){
+        if ($(this).attr(':checked')){    
+            var scheduleToHighlight = $(this).val();
+            alert("Checkbox is checked.");
+            alert(scheduleToHighlight);
+        }
+    });
 });
 
 function parseSched(scheduleEntry){
@@ -28,7 +36,7 @@ function parseSched(scheduleEntry){
         section : scheduleDataArray[1],
         courseTitle : scheduleDataArray[2],
         units : scheduleDataArray[3],
-        time : scheduleDataArray[4],
+        time : scheduleDataArray[4].replace(" ", "_"),
         room : scheduleDataArray[5],
         instructor : scheduleDataArray[6],
         maxClassSize : scheduleDataArray[7],
