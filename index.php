@@ -87,8 +87,11 @@
 			</div>
 
 			<div class="infosheet">
-				<h3>This is where hovered timeslot info will appear!</h3>
+				<h3>This is where properly-filled schedule information will appear!</h3>
 				<div class="info-proper">
+					<form action ="" class="scheduleList">
+
+					</form>
 
 				</div>
 			</div>

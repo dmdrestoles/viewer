@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+    // Parses the data from AISIS > Class Schedule
     $('#step4').on("click", function(){
         textAreaContent = $("#schedule").val().split("\n");
         textAreaSize = textAreaContent.length;
@@ -8,31 +10,38 @@ $(document).ready(function() {
                 var parsedScheduleInfo = parseSched(textAreaContent[i]);
                 var scheduleClass = parsedScheduleInfo.subjectCode + " " +  parsedScheduleInfo.section;
                 var scheduleTime = parsedScheduleInfo.time;
-                var parsedScheduleEntry = "<input type=\"checkbox\" value=" + scheduleTime + "> " + scheduleClass + " - " + scheduleTime.replace("_", " ") + "<br>";
+                var scheduleValueToPass = scheduleClass.replace(" ", "") + scheduleTime
+                var parsedScheduleEntry = "<input type=\"checkbox\" class=\"checkboxes\" value=" + scheduleValueToPass + "> " + scheduleClass + " - " + scheduleTime.replace("_", " ") + "<br/>";
 
-                $(".info-proper").append(parsedScheduleEntry);
+                $(".scheduleList").append(parsedScheduleEntry);
+
+                console.log(scheduleClass);
             }
         }
     });
 
+    // Clears the text area and the form
     $('#step5').on("click", function(){
         $("#schedule").val(""); 
-        $(".info-proper").empty();
+        $(".scheduleList").empty();
+        console.clear();
     });
 
-     $('input[type="checkbox"]').click(function(){
-        if ($(this).attr(':checked')){    
-            var scheduleToHighlight = $(this).val();
-            alert("Checkbox is checked.");
-            alert(scheduleToHighlight);
-        }
+    // Stores checked schedule
+     $('.scheduleList').on("change", function(){
+        $('input[type^=checkbox]').each(function() {
+            if( $(this).is(':checked') ) {
+                var scheduleToHighlight = $(this).val();
+                console.log(scheduleToHighlight);
+            }
+      });
     });
 });
 
 function parseSched(scheduleEntry){
     var scheduleDataArray = scheduleEntry.split("\t");
     var scheduleInfoDict = {
-        subjectCode : scheduleDataArray[0],
+        subjectCode : scheduleDataArray[0].replace(" ", ""),
         section : scheduleDataArray[1],
         courseTitle : scheduleDataArray[2],
         units : scheduleDataArray[3],
