@@ -10,7 +10,7 @@ $(document).ready(function() {
                 var parsedScheduleInfo = parseSched(textAreaContent[i]);
                 var scheduleClass = parsedScheduleInfo.subjectCode + " " +  parsedScheduleInfo.section;
                 var scheduleTime = parsedScheduleInfo.time;
-                var scheduleValueToPass = scheduleClass.replace(" ", "") + scheduleTime
+                var scheduleValueToPass = scheduleClass.replace(" ", "") + "_" + scheduleTime;
                 var parsedScheduleEntry = "<input type=\"checkbox\" class=\"checkboxes\" value=" + scheduleValueToPass + "> " + scheduleClass + " - " + scheduleTime.replace("_", " ") + "<br/>";
 
                 $(".scheduleList").append(parsedScheduleEntry);
@@ -31,8 +31,19 @@ $(document).ready(function() {
      $('.scheduleList').on("change", function(){
         $('input[type^=checkbox]').each(function() {
             if( $(this).is(':checked') ) {
-                var scheduleToHighlight = $(this).val();
-                console.log(scheduleToHighlight);
+                var schedule = $(this).val().split("_");
+
+                var className = schedule[0];
+                var daysToLook = schedule[1].split("-");
+                var timesToLook = schedule[2].split("-");
+
+                // console.log(className);
+                // console.log(daysToLook);
+                // console.log(timesToLook);
+
+                var cellsToHighlight = checkTimeSlots(daysToLook, timesToLook);
+
+                console.log(cellsToHighlight);           
             }
       });
     });
@@ -56,4 +67,20 @@ function parseSched(scheduleEntry){
     };
 
     return scheduleInfoDict;
+}
+
+function checkTimeSlots(dayArray, timeArray){
+    var scheduleArray = [];
+    var startDate = new Date("2020-01-01 " + timeArray[0]);
+    var endDate = new Date("2020-01-01 " + timeArray[1]);
+
+    console.log(startDate + "-" + endDate);
+
+    for (var i = 0; i <= dayArray.size; i++){
+        for (var time = startTime; time <= endTime; time += 30){
+            scheduleArray.push(dayArray[i] + "-" + new String(time));
+        }
+    }
+
+    return scheduleArray;
 }

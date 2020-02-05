@@ -63,12 +63,12 @@
 				?>
 				<tr class="<?php echo $class; ?>" value="<?php echo $startSched; ?>">
 					<td><?php echo $startSched . "-" . $endSched; ?></td>
-					<td id="<?php echo "mon-" . $startSched; ?>"></td>
-					<td id="<?php echo "tue-" . $startSched; ?>"></td>
-					<td id="<?php echo "wed-" . $startSched; ?>"></td>
-					<td id="<?php echo "thu-" . $startSched; ?>"></td>
-					<td id="<?php echo "fri-" . $startSched; ?>"></td>
-					<td id="<?php echo "sat-" . $startSched; ?>"></td>
+					<td id="<?php echo "M-" . $startSched; ?>"></td>
+					<td id="<?php echo "T-" . $startSched; ?>"></td>
+					<td id="<?php echo "W-" . $startSched; ?>"></td>
+					<td id="<?php echo "TH-" . $startSched; ?>"></td>
+					<td id="<?php echo "F-" . $startSched; ?>"></td>
+					<td id="<?php echo "SAT-" . $startSched; ?>"></td>
 				</tr>
 				<?php
 					$startSched = $endSched;
