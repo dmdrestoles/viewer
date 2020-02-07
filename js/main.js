@@ -6,26 +6,25 @@ $(document).ready(function() {
         textAreaSize = textAreaContent.length;
 
         if (textAreaContent != ''){
+            var parsedScheduleEntry = "";
             for (i = 0; i < textAreaSize; i++){
                 var parsedScheduleInfo = parseSched(textAreaContent[i]);
                 var scheduleClass = parsedScheduleInfo.subjectCode + " " +  parsedScheduleInfo.section;
                 var scheduleTime = parsedScheduleInfo.time;
                 var scheduleValueToPass = scheduleClass.replace(" ", "") + "_" + scheduleTime;
-                var parsedScheduleEntry = "<input type=\"checkbox\" class=\"checkboxes\" value=" + scheduleValueToPass + "> " + scheduleClass + " - " + scheduleTime.replace("_", " ") + "<br/>";
+                parsedScheduleEntry += "<input type=\"checkbox\" class=\"checkboxes\" value=" + scheduleValueToPass + "> " + scheduleClass + " - " + scheduleTime.replace("_", " ") + "<br/>";
 
-                $(".scheduleList").append(parsedScheduleEntry);
 
                 console.log(scheduleClass);
             }
+
+            $(".scheduleList").html(parsedScheduleEntry);
+            $("td").css("background-color", "transparent");
         }
     });
 
     // Clears the text area and the form
-    $('#step5').on("click", function(){
-        $("#schedule").val(""); 
-        $(".scheduleList").empty();
-        console.clear();
-    });
+    $('#step5').on("click", resetAll);
 
     // Stores checked schedule
      $('.scheduleList').on("change", function(){
@@ -37,15 +36,23 @@ $(document).ready(function() {
                 var daysToLook = schedule[1].split("-");
                 var timesToLook = schedule[2].split("-");
 
-                // console.log(className);
-                // console.log(daysToLook);
-                // console.log(timesToLook);
-
                 var cellsToHighlight = checkTimeSlots(daysToLook, timesToLook);
 
                 console.log(cellsToHighlight);
 
-                jQuery.each(cellsToHighlight, highlightCell(value));
+                jQuery.each(cellsToHighlight, highlightCell);
+            }
+
+            if (! $(this).is(':checked')){
+                var schedule = $(this).val().split("_");
+
+                var className = schedule[0];
+                var daysToLook = schedule[1].split("-");
+                var timesToLook = schedule[2].split("-");
+
+                var cellsToHighlight = checkTimeSlots(daysToLook, timesToLook);
+
+                jQuery.each(cellsToHighlight, clearHighlights);
             }
       });
     });
@@ -82,14 +89,32 @@ function checkTimeSlots(dayArray, timeArray){
     endDate.setMinutes(timeArray[1] % 100);
 
     for (var i = 0; i < dayArray.length; i++){
-        for (var time = startDate; time <= endDate; time.setMinutes( time.getMinutes() + 30)){
-            scheduleArray.push(dayArray[i] + "-" + time.getHours() + ('0'+time.getMinutes()).slice(-2));    //parse time to properly display
+        var time = new Date(startDate);
+
+        for (time; time < endDate; time.setMinutes( time.getMinutes() + 30)){
+            scheduleArray.push(dayArray[i] + "-" + ("0" + time.getHours()).slice(-2) + ('0'+time.getMinutes()).slice(-2));
         }
     }
 
     return scheduleArray;
 }
 
-function highlightCell(cell){
-    document.getElementById(cell).style.
+function highlightCell(index, cell){
+    if ( $("#" + cell).css('background-color') == "yellow"){
+        $("#" + cell).css("background-color", "red");
+    }
+    else{
+        $("#" + cell).css("background-color", "yellow");
+    }
+}
+
+function clearHighlights(index, cell){
+     $("#" + cell).css("background-color", "transparent");
+}
+
+function resetAll(){
+    $("#schedule").val(""); 
+    $(".scheduleList").empty();
+    $("td").css("background-color", "transparent");
+    console.clear();
 }
