@@ -13,8 +13,8 @@
 
 		$startDate = "2019-12-26 7:00:00";
 		$endDate = "2019-12-26 22:00:00";
-		$startTime = date("Hi", strtotime($startDate));
-		$endTime = date("Hi", strtotime($endDate));
+		$startTime = date("H:i", strtotime($startDate));
+		$endTime = date("H:i", strtotime($endDate));
 		/*
 		$sample = processClasses(fread(fopen("samplefiles/sample.txt", "r"), filesize("samplefiles/sample.txt")));
 		foreach ($sample as &$x){
@@ -59,7 +59,7 @@
 					while ($x <= 30):
 						$class = "time" . $x;
 
-						$endSched = date("Hi", strtotime($startSched) + 1800);
+						$endSched = date("H:i", strtotime($startSched) + 1800);
 				?>
 				<tr class="<?php echo $class; ?>" value="<?php echo $startSched; ?>">
 					<td><?php echo $startSched . "-" . $endSched; ?></td>

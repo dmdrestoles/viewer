@@ -43,7 +43,9 @@ $(document).ready(function() {
 
                 var cellsToHighlight = checkTimeSlots(daysToLook, timesToLook);
 
-                console.log(cellsToHighlight);           
+                console.log(cellsToHighlight);
+
+                jQuery.each(cellsToHighlight, highlightCell(value));
             }
       });
     });
@@ -71,16 +73,23 @@ function parseSched(scheduleEntry){
 
 function checkTimeSlots(dayArray, timeArray){
     var scheduleArray = [];
-    var startDate = new Date("2020-01-01 " + timeArray[0]);
-    var endDate = new Date("2020-01-01 " + timeArray[1]);
+    var startDate = new Date(2020, 1, 1, 0, 0, 0, 0, 0);
+    var endDate = new Date(2020, 1, 1, 0, 0, 0, 0, 0);
 
-    console.log(startDate + "-" + endDate);
+    startDate.setHours(timeArray[0] / 100);
+    startDate.setMinutes(timeArray[0] % 100);
+    endDate.setHours(timeArray[1] / 100);
+    endDate.setMinutes(timeArray[1] % 100);
 
-    for (var i = 0; i <= dayArray.size; i++){
-        for (var time = startTime; time <= endTime; time += 30){
-            scheduleArray.push(dayArray[i] + "-" + new String(time));
+    for (var i = 0; i < dayArray.length; i++){
+        for (var time = startDate; time <= endDate; time.setMinutes( time.getMinutes() + 30)){
+            scheduleArray.push(dayArray[i] + "-" + time.getHours() + ('0'+time.getMinutes()).slice(-2));    //parse time to properly display
         }
     }
 
     return scheduleArray;
+}
+
+function highlightCell(cell){
+    document.getElementById(cell).style.
 }
