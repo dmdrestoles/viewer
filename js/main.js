@@ -13,9 +13,6 @@ $(document).ready(function() {
                 var scheduleTime = parsedScheduleInfo.time;
                 var scheduleValueToPass = scheduleClass.replace(" ", "") + "_" + scheduleTime;
                 parsedScheduleEntry += "<input type=\"checkbox\" class=\"checkboxes\" value=" + scheduleValueToPass + "> " + scheduleClass + " - " + scheduleTime.replace("_", " ") + "<br/>";
-
-
-                console.log(scheduleClass);
             }
 
             $(".scheduleList").html(parsedScheduleEntry);
@@ -32,15 +29,16 @@ $(document).ready(function() {
             if( $(this).is(':checked') ) {
                 var schedule = $(this).val().split("_");
 
+                // console.log(schedule);
+
                 var className = schedule[0];
                 var daysToLook = schedule[1].split("-");
                 var timesToLook = schedule[2].split("-");
 
                 var cellsToHighlight = checkTimeSlots(daysToLook, timesToLook);
 
-                console.log(cellsToHighlight);
-
                 jQuery.each(cellsToHighlight, highlightCell);
+                return false;
             }
 
             if (! $(this).is(':checked')){
@@ -100,7 +98,9 @@ function checkTimeSlots(dayArray, timeArray){
 }
 
 function highlightCell(index, cell){
-    if ( $("#" + cell).css('background-color') == "yellow"){
+    var color = $("#" + cell).css("background-color", "yellow");
+    if ( $("#" + cell).css('background-color') == color){
+        console.log("Conflict!");
         $("#" + cell).css("background-color", "red");
     }
     else{
@@ -109,7 +109,7 @@ function highlightCell(index, cell){
 }
 
 function clearHighlights(index, cell){
-     $("#" + cell).css("background-color", "transparent");
+     $("#" + cell).css("background-color", "unset ");
 }
 
 function resetAll(){
