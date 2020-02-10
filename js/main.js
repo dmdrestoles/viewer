@@ -16,7 +16,7 @@ $(document).ready(function() {
             }
 
             $(".scheduleList").html(parsedScheduleEntry);
-            $("td").css("background-color", "transparent");
+            $("td").css("background-color", "unset");
         }
     });
 
@@ -37,7 +37,9 @@ $(document).ready(function() {
 
                 var cellsToHighlight = checkTimeSlots(daysToLook, timesToLook);
 
-                jQuery.each(cellsToHighlight, highlightCell);
+                for (var i = 0; i <= cellsToHighlight.length; i++){
+                    highlightCell(cellsToHighlight[i], className);
+                }
                 return false;
             }
 
@@ -97,19 +99,19 @@ function checkTimeSlots(dayArray, timeArray){
     return scheduleArray;
 }
 
-function highlightCell(index, cell){
-    var color = $("#" + cell).css("background-color", "yellow");
-    if ( $("#" + cell).css('background-color') == color){
+function highlightCell(cell, value){
+    if ( $("#" + cell).css('background-color') == "rgb(255, 255, 0)"){
         console.log("Conflict!");
         $("#" + cell).css("background-color", "red");
     }
     else{
         $("#" + cell).css("background-color", "yellow");
+        $("td#" + cell).val(value);
     }
 }
 
 function clearHighlights(index, cell){
-     $("#" + cell).css("background-color", "unset ");
+     $("#" + cell).css("background-color", "unset");
 }
 
 function resetAll(){
