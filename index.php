@@ -63,12 +63,12 @@
 				?>
 				<tr class="<?php echo $class; ?>" value="<?php echo $startSched; ?>">
 					<td><?php echo $startSched . "-" . $endSched; ?></td>
-					<td id="<?php echo "M-" . $startSched; ?>"></td>
-					<td id="<?php echo "T-" . $startSched; ?>"></td>
-					<td id="<?php echo "W-" . $startSched; ?>"></td>
-					<td id="<?php echo "TH-" . $startSched; ?>"></td>
-					<td id="<?php echo "F-" . $startSched; ?>"></td>
-					<td id="<?php echo "SAT-" . $startSched; ?>"></td>
+					<td class="timeslots" id="<?php echo "M-" . $startSched; ?>"></td>
+					<td class="timeslots" id="<?php echo "T-" . $startSched; ?>"></td>
+					<td class="timeslots" id="<?php echo "W-" . $startSched; ?>"></td>
+					<td class="timeslots" id="<?php echo "TH-" . $startSched; ?>"></td>
+					<td class="timeslots" id="<?php echo "F-" . $startSched; ?>"></td>
+					<td class="timeslots" id="<?php echo "SAT-" . $startSched; ?>"></td>
 				</tr>
 				<?php
 					$startSched = $endSched;
@@ -77,8 +77,8 @@
 				?>
 			</table>
 		</div>
-		<div class="navigation col-lg-3">
-			<textarea id="schedule" autofocus="true" cols="105" placeholder="Paste AISIS schedule here" rows="10"></textarea>
+		<div class="navigation col-lg-6">
+			<textarea id="schedule" autofocus="true" cols="106" placeholder="Paste AISIS schedule here" rows="10"></textarea>
 			<div class="button-list">
 				<button class="fill-btn btn-primary btn-lg" id="step4" type="button" data-toggle="modal" data-target="#myModal">Fill</button>
 				<br/>

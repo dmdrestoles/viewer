@@ -25,6 +25,7 @@ $(document).ready(function() {
 
     // Stores checked schedule
      $('.scheduleList').on("change", function(){
+        clearAllHighlights();
         $('input[type^=checkbox]').each(function() {
             if( $(this).is(':checked') ) {
                 var schedule = $(this).val().split("_");
@@ -40,19 +41,6 @@ $(document).ready(function() {
                 for (var i = 0; i <= cellsToHighlight.length; i++){
                     highlightCell(cellsToHighlight[i], className);
                 }
-                return false;
-            }
-
-            if (! $(this).is(':checked')){
-                var schedule = $(this).val().split("_");
-
-                var className = schedule[0];
-                var daysToLook = schedule[1].split("-");
-                var timesToLook = schedule[2].split("-");
-
-                var cellsToHighlight = checkTimeSlots(daysToLook, timesToLook);
-
-                jQuery.each(cellsToHighlight, clearHighlights);
             }
       });
     });
@@ -101,22 +89,21 @@ function checkTimeSlots(dayArray, timeArray){
 
 function highlightCell(cell, value){
     if ( $("#" + cell).css('background-color') == "rgb(255, 255, 0)"){
-        console.log("Conflict!");
         $("#" + cell).css("background-color", "red");
     }
     else{
         $("#" + cell).css("background-color", "yellow");
-        $("td#" + cell).val(value);
+        $("#" + cell).html(value);
     }
 }
 
-function clearHighlights(index, cell){
-     $("#" + cell).css("background-color", "unset");
+function clearAllHighlights(){
+    $('td').css("background-color", "unset");
+    $("td.timeslots").html(" ");
 }
 
 function resetAll(){
     $("#schedule").val(""); 
     $(".scheduleList").empty();
     $("td").css("background-color", "transparent");
-    console.clear();
 }
