@@ -29,9 +29,7 @@ $(document).ready(function() {
         $('input[type^=checkbox]').each(function() {
             if( $(this).is(':checked') ) {
                 var schedule = $(this).val().split("_");
-
-                // console.log(schedule);
-
+                
                 var className = schedule[0];
                 var daysToLook = schedule[1].split("-");
                 var timesToLook = schedule[2].split("-");
