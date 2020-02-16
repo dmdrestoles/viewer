@@ -1,0 +1,51 @@
+td, th{
+	padding: 2px;
+	text-align: center;
+	width: 100px;
+}
+
+#title{
+	text-align: center;
+}
+
+.txt-area{
+	width: 500px;
+}
+
+.fill-btn, .reset-btn{
+	width: 100%;
+}
+
+.modal-dialog {
+	height: auto;
+	font: 600 12pt "Open Sans";
+}
+
+.modal-error {
+	color: #ff0000;
+	font: 18pt "futura_ltcondensed";
+	visibility: hidden;
+}
+
+.modal-content {
+	height: 80%;
+}
+
+.modal-footer {
+	height: 10%;
+}
+
+.modal-title {
+	color: #383B37;
+	font: 20pt "futura_ltcondensed";
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 1pt;
+}
+
+.modal-p {
+	color: #383B37;
+	font: 12pt "Open Sans";
+	text-align: left;
+	letter-spacing: 1pt;
+}
