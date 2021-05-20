@@ -6,10 +6,13 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+		
+
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans:600italic,700,600,400' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/mainpage.css" />
+		<script src="js/html2canvas.js"></script>
 		<script src="js/main.js"></script>
 	</head>
 
@@ -19,7 +22,7 @@
 
 	<div class="page-container">
 		<div class="calendar col-lg-6">
-			<table width="100%" border="3" cellspacing="5" align="center">
+			<table id="timetable" width="100%" border="3" cellspacing="5" align="center">
 				<tr>
 					<td align="center">
 					<td>MONDAY</td>
@@ -308,6 +311,7 @@
 				<br/>
 				<br/>
 				<button class="reset-btn btn-warning btn-lg" id="step5">Reset</button>
+				<button class="fill-btn btn-primary btn-lg" id="step6" type="button" data-toggle="modal" data-target="#myModal" onclick="timeTableToImage()">Download</button>
 			</div>
 
 			<div class="infosheet">

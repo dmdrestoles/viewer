@@ -68,7 +68,6 @@ $(document).ready(function() {
 
 function parseSched(scheduleEntry){
     var scheduleDataArray = scheduleEntry.split("\t");
-    console.log( scheduleDataArray );
 
     var scheduleInfoDict = {
         subjectCode : scheduleDataArray[0].replace(" ", ""),
@@ -110,13 +109,28 @@ function checkTimeSlots(dayArray, timeArray){
 }
 
 function highlightCell(cell, value, color){
-    if ( $("#" + cell).css('background-color') != "rgb(0, 0, 0)"){
+    if ( $("#" + cell).css('background-color') == "rgb(255, 255, 0)"){
         $("#" + cell).css("background-color", "red");
     }
     else{
-        $("#" + cell).css("background-color", color);
+        $("#" + cell).css("background-color", "yellow");
         $("#" + cell).html(value);
     }
+}
+
+function timeTableToImage(){
+    var calendar = document.getElementById('timetable');
+    console.log(calendar);
+
+    html2canvas( calendar, scale=1.0 ).then( function( canvas ) {
+        var link = document.createElement('a');
+        document.body.appendChild( link );
+        link.download = "calendar.png";
+        link.href = canvas.toDataURL( "image/png" );
+        link.target = '_blank';
+        link.click();
+    });
+
 }
 
 function clearAllHighlights(){
