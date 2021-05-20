@@ -56,9 +56,7 @@ $(document).ready(function() {
                     var cellsToHighlight = checkTimeSlots(daysToLook, timesToLook);
 
                     for (var i = 0; i <= cellsToHighlight.length; i++){
-                        
-                        var randomColor = Math.floor(Math.random()*16777215).toString(16);
-                        highlightCell(cellsToHighlight[i], className, randomColor);
+                        highlightCell(cellsToHighlight[i], className);
                     }
                 }
             }
@@ -109,12 +107,12 @@ function checkTimeSlots(dayArray, timeArray){
     return scheduleArray;
 }
 
-function highlightCell(cell, value, color){
-    if ( $("#" + cell).css('background-color') != "rgb(0, 0, 0)"){
+function highlightCell(cell, value){
+    if ( $("#" + cell).css('background-color') == "rgb(255, 255, 0)"){
         $("#" + cell).css("background-color", "red");
     }
     else{
-        $("#" + cell).css("background-color", color);
+        $("#" + cell).css("background-color", "yellow");
         $("#" + cell).html(value);
     }
 }
