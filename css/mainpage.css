@@ -1,19 +1,156 @@
-td, th{
-	padding: 2px;
-	text-align: center;
-	width: 100px;
+body{
+	
+position: absolute;
+width: 1440px;
+height: 1024px;
+
+background: linear-gradient(89.89deg, rgba(28, 56, 180, 0.95) 0.16%, #F9D47B 99.97%);
+	
+}
+
+td, th{3
+position: absolute;
+width: 192px;
+height: 874px;
+left: 20px;
+top: 455px;
+
+font-family: Rubik;
+font-style: normal;
+font-weight: bold;
+font-size: 14px;
+line-height: 17px;
+text-align: center;
+
+color: #1C38B4;
 }
 
 #title{
-	text-align: center;
+position: absolute;
+width: 1827px;
+height: 78px;
+left: 308px;
+top: 131px;
+
+font-family: Poppins;
+font-style: normal;
+font-weight: bold;
+font-size: 72px;
+line-height: 108px;
+
+color: #FFFFFF;
 }
+
+.image img{
+	
+position: absolute;
+width: 341px;
+height: 286px;
+left: 0px;
+top: 71px;
+
+}
+
+.infosheet h3{
+position: absolute;
+width: 1380px;
+height: 38px;
+left: 308px;
+top: 233px;
+
+font-family: Rubik;
+font-style: normal;
+font-weight: normal;
+font-size: 32px;
+line-height: 38px;
+
+
+
+color: #FFFFFF;
+/* identical to box height */
+
+
+color: #FFFFFF;
+	
+}
+
 
 .txt-area{
 	width: 500px;
 }
 
-.fill-btn, .reset-btn{
-	width: 100%;
+.navigation-col-lg-6 textarea{
+position: absolute;
+width: 386px;
+height: 185px;
+left: 913px;
+top: 381px;
+
+background: #FFFFFF;
+border-radius: 30px;
+}
+
+.navigation-col-lg-6 ::-webkit-input-placeholder{
+	
+position: absolute;
+width: 308px;
+height: 41px;
+left: 1043px;
+top: 509px;
+
+font-family: Rubik;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 21px;
+
+color: #9B9B9B;
+}
+
+.fill-btn{
+position: absolute;
+width: 102px;
+height: 46px;
+left: 1055px;
+top: 584px;
+
+border: 5px solid #FFFFFF;
+box-sizing: border-box;
+border-radius: 50px;
+background: transparent;
+
+font-family: Poppins;
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 27px;
+text-align: center;
+
+color: #FFFFFF;
+
+}
+
+.reset-btn{
+position: absolute;
+width: 102px;
+height: 46px;
+left: 1055px;
+top: 667px;
+
+border: 5px solid #FFFFFF;
+box-sizing: border-box;
+border-radius: 50px;
+background: transparent;
+
+
+font-family: Poppins;
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 27px;
+text-align: center;
+
+color: #FFFFFF;
 }
 
 .modal-dialog {
@@ -49,3 +186,7 @@ td, th{
 	text-align: left;
 	letter-spacing: 1pt;
 }
+
+
+
+
