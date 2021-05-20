@@ -11,8 +11,14 @@ $(document).ready(function() {
                 var parsedScheduleInfo = parseSched(textAreaContent[i]);
                 var scheduleClass = parsedScheduleInfo.subjectCode + " " +  parsedScheduleInfo.section;
                 var scheduleTime = parsedScheduleInfo.time;
-                var scheduleValueToPass = scheduleClass.replace(" ", "") + "_" + scheduleTime;
-                parsedScheduleEntry += "<input type=\"checkbox\" class=\"checkboxes\" value=" + scheduleValueToPass + "> " + scheduleClass + " - " + scheduleTime.replace("_", " ") + "<br/>";
+                var scheduleValueToPass = scheduleClass.replaceAll(" ", "-") + ";" + scheduleTime;          // Separator for class name to schedule
+                var htmlDisplay = scheduleClass;
+
+                for ( j = 0; j < scheduleTime.length; j++ ){
+                    htmlDisplay = htmlDisplay + " - " + scheduleTime[j].replaceAll("_", " ");
+                }
+
+                parsedScheduleEntry += "<input type=\"checkbox\" class=\"checkboxes\" value=" + scheduleValueToPass + "> " + htmlDisplay + "<br/>";
             }
 
             $(".scheduleList").html(parsedScheduleEntry);
@@ -28,16 +34,29 @@ $(document).ready(function() {
         clearAllHighlights();
         $('input[type^=checkbox]').each(function() {
             if( $(this).is(':checked') ) {
-                var schedule = $(this).val().split("_");
-                
-                var className = schedule[0];
-                var daysToLook = schedule[1].split("-");
-                var timesToLook = schedule[2].split("-");
+                var classData = $(this).val().split(";");
+                //console.log(classData);
+                var className = classData[0].replace("-", " ");         // Splits the class name from the schedule
 
-                var cellsToHighlight = checkTimeSlots(daysToLook, timesToLook);
+                var schedules = classData[1].split(",");                // Splits the schedule to elements in an array
+                //console.log(schedules);
 
-                for (var i = 0; i <= cellsToHighlight.length; i++){
-                    highlightCell(cellsToHighlight[i], className);
+                // Process each time schedule and highlight accordingly
+                for ( m = 0; m < schedules.length; m++ ){ 
+                    var schedule = schedules[m].split("_");
+                    //console.log( schedule );
+                    var daysToLook = schedule[0].split("-");
+                    var timesToLook = schedule[1].split("-");
+
+                    if ( daysToLook == "D" ){
+                        daysToLook = [ "M", "T", "W", "TH", "F" ];
+                    }
+
+                    var cellsToHighlight = checkTimeSlots(daysToLook, timesToLook);
+
+                    for (var i = 0; i <= cellsToHighlight.length; i++){
+                        highlightCell(cellsToHighlight[i], className);
+                    }
                 }
             }
       });
@@ -46,12 +65,14 @@ $(document).ready(function() {
 
 function parseSched(scheduleEntry){
     var scheduleDataArray = scheduleEntry.split("\t");
+    console.log( scheduleDataArray );
+
     var scheduleInfoDict = {
         subjectCode : scheduleDataArray[0].replace(" ", ""),
         section : scheduleDataArray[1],
         courseTitle : scheduleDataArray[2],
         units : scheduleDataArray[3],
-        time : scheduleDataArray[4].replace(" ", "_"),
+        time : scheduleDataArray[4].replaceAll(" ", "_").split(";_"),
         room : scheduleDataArray[5],
         instructor : scheduleDataArray[6],
         maxClassSize : scheduleDataArray[7],
@@ -104,4 +125,9 @@ function resetAll(){
     $("#schedule").val(""); 
     $(".scheduleList").empty();
     $("td").css("background-color", "transparent");
+
+    var x = document.getElementsByClassName('timeslots');
+    for ( var i = 0; i < x.length; i++ ){
+        x[i].innerHTML = '';
+    }
 }
