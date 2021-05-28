@@ -2,6 +2,7 @@ $(document).ready(function() {
 
     // Parses the data from AISIS > Class Schedule
     $('#step4').on("click", function(){
+        tableClear();
         textAreaContent = $("#schedule").val().split("\n");
         textAreaSize = textAreaContent.length;
 
@@ -69,6 +70,7 @@ $(document).ready(function() {
 function parseSched(scheduleEntry){
     var scheduleDataArray = scheduleEntry.split("\t");
     var randomColor = Math.floor(Math.random()*16777215).toString(16);
+    
     var scheduleInfoDict = {
         subjectCode : scheduleDataArray[0].replace(" ", ""),
         section : scheduleDataArray[1],
@@ -141,13 +143,16 @@ function clearAllHighlights(){
     $("td.timeslots").html(" ");
 }
 
+function tableClear(){
+    var x = document.getElementsByClassName('timeslots');
+    for ( var i = 0; i < x.length; i++ ){
+        x[i].innerHTML = '';
+    }
+}
 function resetAll(){
     $("#schedule").val(""); 
     $(".scheduleList").empty();
     $("td").css("background-color", "transparent");
 
-    var x = document.getElementsByClassName('timeslots');
-    for ( var i = 0; i < x.length; i++ ){
-        x[i].innerHTML = '';
-    }
+    tableClear();
 }
