@@ -11,7 +11,7 @@ $(document).ready(function() {
                 var parsedScheduleInfo = parseSched(textAreaContent[i]);
                 var scheduleClass = parsedScheduleInfo.subjectCode + " " +  parsedScheduleInfo.section;
                 var scheduleTime = parsedScheduleInfo.time;
-                var scheduleValueToPass = scheduleClass.replaceAll(" ", "-") + ";" + scheduleTime;          // Separator for class name to schedule
+                var scheduleValueToPass = scheduleClass.replaceAll(" ", "-") + ";" + scheduleTime + ";" + parsedScheduleInfo.color;          // Separator for class name to schedule
                 var htmlDisplay = scheduleClass;
 
                 for ( j = 0; j < scheduleTime.length; j++ ){
@@ -35,10 +35,12 @@ $(document).ready(function() {
         $('input[type^=checkbox]').each(function() {
             if( $(this).is(':checked') ) {
                 var classData = $(this).val().split(";");
-                //console.log(classData);
+                console.log(classData);
                 var className = classData[0].replace("-", " ");         // Splits the class name from the schedule
 
                 var schedules = classData[1].split(",");                // Splits the schedule to elements in an array
+                var color = classData[2];
+                
                 //console.log(schedules);
 
                 // Process each time schedule and highlight accordingly
@@ -54,11 +56,9 @@ $(document).ready(function() {
                     }
 
                     var cellsToHighlight = checkTimeSlots(daysToLook, timesToLook);
-
+                    
                     for (var i = 0; i <= cellsToHighlight.length; i++){
-                        
-                        var randomColor = Math.floor(Math.random()*16777215).toString(16);
-                        highlightCell(cellsToHighlight[i], className, randomColor);
+                        highlightCell(cellsToHighlight[i], className, color);
                     }
                 }
             }
@@ -68,7 +68,7 @@ $(document).ready(function() {
 
 function parseSched(scheduleEntry){
     var scheduleDataArray = scheduleEntry.split("\t");
-
+    var randomColor = Math.floor(Math.random()*16777215).toString(16);
     var scheduleInfoDict = {
         subjectCode : scheduleDataArray[0].replace(" ", ""),
         section : scheduleDataArray[1],
@@ -82,6 +82,7 @@ function parseSched(scheduleEntry){
         level : scheduleDataArray[9],
         freeSlots : scheduleDataArray[10],
         remarks : scheduleDataArray[11],
+        color: randomColor
     };
 
     return scheduleInfoDict;
@@ -109,11 +110,13 @@ function checkTimeSlots(dayArray, timeArray){
 }
 
 function highlightCell(cell, value, color){
-    if ( $("#" + cell).css('background-color') == "rgb(255, 255, 0)"){
+    console.log( $("#" + cell).css('background-color') );
+
+    if ( $("#" + cell).css('background-color') != "rgba(0, 0, 0, 0)"){
         $("#" + cell).css("background-color", "red");
     }
     else{
-        $("#" + cell).css("background-color", "yellow");
+        $("#" + cell).css("background-color", color);
         $("#" + cell).html(value);
     }
 }
