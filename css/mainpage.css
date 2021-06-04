@@ -118,10 +118,10 @@ border-radius: 30px;
 
 .button-list{
 display:flex;
-flex-direction:column;
-padding-top: 50px;
+flex-direction:;
 top: 201px;
 margin: auto;
+padding: 15px 32px;
 }
 
 .fill-btn, .reset-btn,.dl-btn, .schedule-btn{
