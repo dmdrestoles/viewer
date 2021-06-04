@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    var scheds = [];
     // Parses the data from AISIS > Class Schedule
     $('#step4').on("click", function(){
         tableClear();
@@ -10,16 +10,17 @@ $(document).ready(function() {
             var parsedScheduleEntry = "";
             for (i = 0; i < textAreaSize; i++){
                 var parsedScheduleInfo = parseSched(textAreaContent[i]);
+                scheds.push(parsedScheduleInfo);
                 var scheduleClass = parsedScheduleInfo.subjectCode + " " +  parsedScheduleInfo.section;
                 var scheduleTime = parsedScheduleInfo.time;
-                var scheduleValueToPass = scheduleClass.replaceAll(" ", "-") + ";" + scheduleTime + ";" + parsedScheduleInfo.color;          // Separator for class name to schedule
+                // var scheduleValueToPass = scheduleClass.replaceAll(" ", "-") + ";" + scheduleTime + ";" + parsedScheduleInfo.color + ";" + parsedScheduleInfo.instructor;          // Separator for class name to schedule
                 var htmlDisplay = scheduleClass;
 
                 for ( j = 0; j < scheduleTime.length; j++ ){
                     htmlDisplay = htmlDisplay + " - " + scheduleTime[j].replaceAll("_", " ");
                 }
 
-                parsedScheduleEntry += "<input type=\"checkbox\" class=\"checkboxes\" value=" + scheduleValueToPass + "> " + htmlDisplay + "<br/>";
+                parsedScheduleEntry += "<input type=\"checkbox\" class=\"checkboxes\" value=" + i + "> " + htmlDisplay + "<br/>";
             }
 
             $(".scheduleList").html(parsedScheduleEntry);
@@ -35,14 +36,16 @@ $(document).ready(function() {
         clearAllHighlights();
         $('input[type^=checkbox]').each(function() {
             if( $(this).is(':checked') ) {
-                var classData = $(this).val().split(";");
+                // var classData = $(this).val().split(";");
+                var classData = scheds[$(this).val()];
                 console.log(classData);
-                var className = classData[0].replace("-", " ");         // Splits the class name from the schedule
-
-                var schedules = classData[1].split(",");                // Splits the schedule to elements in an array
-                var color = classData[2];
                 
-                //console.log(schedules);
+                var schedules = classData.time;
+                var color = classData.color;
+                // var schedules = classData[1].split(",");                // Splits the schedule to elements in an array
+                // var color = classData[2];
+                
+                console.log(schedules);
 
                 // Process each time schedule and highlight accordingly
                 for ( m = 0; m < schedules.length; m++ ){ 
@@ -59,7 +62,7 @@ $(document).ready(function() {
                     var cellsToHighlight = checkTimeSlots(daysToLook, timesToLook);
                     
                     for (var i = 0; i <= cellsToHighlight.length; i++){
-                        highlightCell(cellsToHighlight[i], className, color);
+                        highlightCell(cellsToHighlight[i], classData, color);
                     }
                 }
             }
@@ -69,6 +72,7 @@ $(document).ready(function() {
 
 function parseSched(scheduleEntry){
     var scheduleDataArray = scheduleEntry.split("\t");
+    console.log( scheduleDataArray );
     var randomColor = Math.floor(Math.random()*16777215).toString(16);
     
     var scheduleInfoDict = {
@@ -112,14 +116,18 @@ function checkTimeSlots(dayArray, timeArray){
 }
 
 function highlightCell(cell, value, color){
-    console.log( $("#" + cell).css('background-color') );
+    // console.log( $("#" + cell).css('background-color') );
 
     if ( $("#" + cell).css('background-color') != "rgba(0, 0, 0, 0)"){
         $("#" + cell).css("background-color", "red");
     }
     else{
+        var className = value.subjectCode + value.section;
+        var tooltipContent = value.courseTitle + "\n" + "Professor: " + value.instructor;
+        // var tooltip = "<span class=\"schedTooltip\">" + tooltipContent;
+        var tooltip = "<span title=\"" + tooltipContent + "\">" + className + "</span>";
         $("#" + cell).css("background-color", color);
-        $("#" + cell).html(value);
+        $("#" + cell).html(tooltip);
     }
 }
 
@@ -139,17 +147,20 @@ function timeTableToImage(){
 }
 
 function clearAllHighlights(){
+    scheds = [];
     $('td').css("background-color", "unset");
     $("td.timeslots").html(" ");
 }
 
 function tableClear(){
+    scheds = [];
     var x = document.getElementsByClassName('timeslots');
     for ( var i = 0; i < x.length; i++ ){
         x[i].innerHTML = '';
     }
 }
 function resetAll(){
+    scheds = [];
     $("#schedule").val(""); 
     $(".scheduleList").empty();
     $("td").css("background-color", "transparent");

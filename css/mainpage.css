@@ -210,3 +210,13 @@ text-align: center;
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .schedule-btn {background-color: #3e8e41;}
+
+.timeslots .schedTooltip{
+	visibility: hidden;
+	position: absolute;
+	z-index: 1;
+}
+
+.timeslots:hover .schedTooltip{
+	visibility: visible;
+}
