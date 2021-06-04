@@ -147,17 +147,20 @@ function timeTableToImage(){
 }
 
 function clearAllHighlights(){
+    scheds = [];
     $('td').css("background-color", "unset");
     $("td.timeslots").html(" ");
 }
 
 function tableClear(){
+    scheds = [];
     var x = document.getElementsByClassName('timeslots');
     for ( var i = 0; i < x.length; i++ ){
         x[i].innerHTML = '';
     }
 }
 function resetAll(){
+    scheds = [];
     $("#schedule").val(""); 
     $(".scheduleList").empty();
     $("td").css("background-color", "transparent");
