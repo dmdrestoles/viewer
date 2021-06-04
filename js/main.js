@@ -1,5 +1,6 @@
+var scheds = [];
+
 $(document).ready(function() {
-    var scheds = [];
     // Parses the data from AISIS > Class Schedule
     $('#step4').on("click", function(){
         tableClear();
@@ -23,6 +24,7 @@ $(document).ready(function() {
                 parsedScheduleEntry += "<input type=\"checkbox\" class=\"checkboxes\" value=" + i + "> " + htmlDisplay + "<br/>";
             }
 
+            console.log( scheds );
             $(".scheduleList").html(parsedScheduleEntry);
             $("td").css("background-color", "unset");
         }
@@ -72,7 +74,7 @@ $(document).ready(function() {
 
 function parseSched(scheduleEntry){
     var scheduleDataArray = scheduleEntry.split("\t");
-    console.log( scheduleDataArray );
+    // console.log( scheduleDataArray );
     var randomColor = Math.floor(Math.random()*16777215).toString(16);
     
     var scheduleInfoDict = {
@@ -147,20 +149,19 @@ function timeTableToImage(){
 }
 
 function clearAllHighlights(){
-    scheds = [];
     $('td').css("background-color", "unset");
     $("td.timeslots").html(" ");
 }
 
 function tableClear(){
-    scheds = [];
+    scheds.length = 0;
     var x = document.getElementsByClassName('timeslots');
     for ( var i = 0; i < x.length; i++ ){
         x[i].innerHTML = '';
     }
 }
 function resetAll(){
-    scheds = [];
+    scheds.length = 0;
     $("#schedule").val(""); 
     $(".scheduleList").empty();
     $("td").css("background-color", "transparent");
