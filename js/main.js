@@ -122,6 +122,7 @@ function highlightCell(cell, value, color){
 
     if ( $("#" + cell).css('background-color') != "rgba(0, 0, 0, 0)"){
         $("#" + cell).css("background-color", "red");
+        $("#" + cell).html("CONFLICT!");
     }
     else{
         var className = value.subjectCode + value.section;
