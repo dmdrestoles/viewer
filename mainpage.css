@@ -1,0 +1,222 @@
+body{
+	
+
+width: 1440px;
+height: 1024px;
+
+background: linear-gradient(89.89deg, rgba(28, 56, 180, 0.95) 0.16%, #F9D47B 99.97%);
+	
+}
+img{
+width: 341px;
+height: 286px;
+}
+
+
+.site{
+display:flex;
+flex-direction:column;
+padding-top: 50px;
+top: 201px;
+}
+
+
+.title{
+display:flex;
+flex-direction:row;
+
+}
+
+.heading{
+display:flex;
+flex-direction:column;
+padding-top:20px;
+
+font-family: Rubik;
+font-style: normal;
+font-weight: normal;
+font-size: 32px;
+line-height: 38px;
+
+
+
+
+color: #FFFFFF;
+
+}
+
+.h2{
+padding-bottom:100px;
+}
+
+td, th{
+	padding: 2px;
+	text-align: center;
+	width: 100px;
+}
+
+#timetable{	
+background-color: white;
+}
+
+.date{
+font-family: Rubik;
+font-style: normal;
+font-weight: bold;
+font-size: 14px;
+line-height: 17px;
+text-align: center;
+
+color: #1C38B4;
+	
+}
+
+.timeheader{
+
+
+font-family: Rubik;
+font-style: normal;
+font-weight: bold;
+font-size: 14px;
+line-height: 17px;
+text-align: center;
+
+color: #1C38B4;
+	
+}
+
+
+#title{
+
+
+font-family: Poppins;
+font-style: normal;
+font-weight: bold;
+font-size: 72px;
+line-height: 108px;
+
+color: #FFFFFF;
+}
+
+.navigation-col-lg-6{
+display:flex;
+flex-direction:column;
+}
+
+.navigation-col-lg-6 textarea{
+background: #FFFFFF;
+border-radius: 30px;
+
+}
+
+
+
+/* .txt-area{
+	width: 500px;
+}
+*/
+
+.button-list{
+display:flex;
+flex-direction:none;
+top: 201px;
+margin: auto;
+padding: 15px 32px;
+}
+
+.fill-btn, .reset-btn,.dl-btn, .schedule-btn{
+left: 1006px;
+top: 586px;
+width: 128px;
+height: 46px;
+border: 5px solid #FFFFFF;
+box-sizing: border-box;
+border-radius: 50px;
+background: transparent;
+
+
+font-family: Poppins;
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 27px;
+text-align: center;
+
+}
+
+.modal-dialog {
+	height: auto;
+	font: 600 12pt "Open Sans";
+}
+
+.modal-error {
+	color: #ff0000;
+	font: 18pt "futura_ltcondensed";
+	visibility: hidden;
+}
+
+.modal-content {
+	height: 80%;
+}
+
+.modal-footer {
+	height: 10%;
+}
+
+.modal-title {
+	color: #383B37;
+	font: 20pt "futura_ltcondensed";
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 1pt;
+}
+
+.modal-p {
+	color: #383B37;
+	font: 12pt "Open Sans";
+	text-align: left;
+	letter-spacing: 1pt;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+	position: relative;
+	display: inline-block;
+	}
+	
+/* Dropdown Content (Hidden by Default) */
+.schedule-content {
+	display: none;
+	position: absolute;
+	background-color: #f1f1f1;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+	}
+	
+/* Links inside the dropdown */
+.schedule-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	}
+	  
+/* Change color of dropdown links on hover */
+.schedule-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .schedule-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .schedule-btn {background-color: #3e8e41;}
+
+.timeslots .schedTooltip{
+	visibility: hidden;
+	position: absolute;
+	z-index: 1;
+}
+
+.timeslots:hover .schedTooltip{
+	visibility: visible;
+}
