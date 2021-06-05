@@ -118,7 +118,7 @@ border-radius: 30px;
 
 .button-list{
 display:flex;
-flex-direction:;
+flex-direction:none;
 top: 201px;
 margin: auto;
 padding: 15px 32px;
