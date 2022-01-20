@@ -8,7 +8,7 @@ $(document).ready(function() {
         textArea = $("#schedule").val().split("\n");
         var textAreaContent = [];
         for (let i = 1; i < textArea.length; i += 2){
-            textAreaContent.push(textArea[i - 1].concat(textArea[i]));
+            textAreaContent.push(textArea[i - 1].concat("\t", textArea[i]));
         }
 
         textAreaSize = textAreaContent.length;
@@ -24,13 +24,13 @@ $(document).ready(function() {
                 var htmlDisplay = scheduleClass;
 
                 for ( j = 0; j < scheduleTime.length; j++ ){
-                    htmlDisplay = htmlDisplay + " - " + scheduleTime[j].replaceAll("_", " ");
+                    htmlDisplay = htmlDisplay + " - " + scheduleTime[j].replaceAll("_", " ")  + " " + parsedScheduleInfo.setup;
                 }
 
                 parsedScheduleEntry += "<input type=\"checkbox\" class=\"checkboxes\" value=" + i + "> " + htmlDisplay + "<br/>";
             }
 
-            console.log( scheds );
+            // console.log( scheds );
             $(".scheduleList").html(parsedScheduleEntry);
             $("td").css("background-color", "unset");
         }
@@ -81,21 +81,23 @@ $(document).ready(function() {
 function parseSched(scheduleEntry){
     var scheduleDataArray = scheduleEntry.split("\t");
     // console.log( scheduleDataArray );
-    var randomColor = Math.floor(Math.random()*16777215).toString(16);
+    // var randomColor = Math.floor(Math.random()*16777215).toString(16);
+    var randomColor = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
     
     var scheduleInfoDict = {
         subjectCode : scheduleDataArray[0].replace(" ", ""),
         section : scheduleDataArray[1],
         courseTitle : scheduleDataArray[2],
         units : scheduleDataArray[3],
-        time : scheduleDataArray[4].replaceAll(" ", "_").replace("(FULLY_ONLINE)", "").replace("(FLEX)", "").split(";_"),
-        room : scheduleDataArray[5],
-        instructor : scheduleDataArray[6],
-        maxClassSize : scheduleDataArray[7],
-        language : scheduleDataArray[8],
-        level : scheduleDataArray[9],
-        freeSlots : scheduleDataArray[10],
-        remarks : scheduleDataArray[11],
+        time : scheduleDataArray[4].replaceAll(" ", "_").split(";_"),
+        setup: scheduleDataArray[5],
+        room : scheduleDataArray[6],
+        instructor : scheduleDataArray[7],
+        maxClassSize : scheduleDataArray[8],
+        language : scheduleDataArray[9],
+        level : scheduleDataArray[10],
+        freeSlots : scheduleDataArray[11],
+        remarks : scheduleDataArray[12],
         color: randomColor
     };
 
