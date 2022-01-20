@@ -4,7 +4,13 @@ $(document).ready(function() {
     // Parses the data from AISIS > Class Schedule
     $('#step4').on("click", function(){
         tableClear();
-        textAreaContent = $("#schedule").val().split("\n");
+
+        textArea = $("#schedule").val().split("\n");
+        var textAreaContent = [];
+        for (let i = 1; i < textArea.length; i += 2){
+            textAreaContent.push(textArea[i - 1].concat(textArea[i]));
+        }
+
         textAreaSize = textAreaContent.length;
 
         if (textAreaContent != ''){
@@ -82,7 +88,7 @@ function parseSched(scheduleEntry){
         section : scheduleDataArray[1],
         courseTitle : scheduleDataArray[2],
         units : scheduleDataArray[3],
-        time : scheduleDataArray[4].replaceAll(" ", "_").split(";_"),
+        time : scheduleDataArray[4].replaceAll(" ", "_").replace("(FULLY_ONLINE)", "").replace("(FLEX)", "").split(";_"),
         room : scheduleDataArray[5],
         instructor : scheduleDataArray[6],
         maxClassSize : scheduleDataArray[7],
